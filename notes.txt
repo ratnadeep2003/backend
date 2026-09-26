@@ -1,0 +1,16 @@
+Backend: in its tradiitonal defination is a computer which is listening for http, websocket or grpc request through an open port like 8080 which is accessiable over the internet so that clients can connect and send receive data through it 
+
+Flow of a request:
+    1.DNS Resolution:You type example.com into Chrome. As you correctly noted, Chrome asks a DNS server to translate this human-readable name into a machine-readable IP address (like 192.168.1.50).
+    
+    2.The Request Travels:Chrome packages your request into data packets and sends them across the internet, hopping through various routers until they reach the AWS data center hosting that IP address.
+    
+    3.The AWS Firewall:Before the request can touch the actual server, it hits the AWS Security Group (firewall). If the request is trying to access a blocked port (like a hacker trying to access a database port), the firewall silently drops it. If it's a standard web request (HTTP port 80 or HTTPS port 443), it lets it through.
+    
+    4.The EC2 Instance (The Server):The request arrives at the EC2 instance. This is simply a virtual computer running an operating system (like Linux) in an AWS data center.
+    
+    5.Nginx (The Traffic Cop):Inside the EC2 instance, Nginx is listening for incoming traffic on ports 80 and 443. It takes the request, decrypts the HTTPS security layer, and figures out where it needs to go next.
+    
+    6.The Application (Localhost Mapping):Where the developer's code actually lives.The developer's actual web application (like a Node.js or Python app) is running inside this EC2 instance, usually on a hidden internal port like 3000. Nginx takes the request and internally forwards it to localhost:3000.
+    
+    7.The Return Journey:The application at port 3000 processes the request, pulls data from a database if needed, and generates the HTML/JSON response. It hands this back to Nginx, which encrypts it and sends it all the way back across the internet to your Chrome browser, where it finally renders on your screen.
