@@ -1,0 +1,55 @@
+There are a lot of ways for client and server to communicate, HTTP is the most common of them.
+
+HTTP: a medium through which browsers communicate with servers to send or recieve data. It is an application layer protocol.
+
+There are 2 core concepts for http: 
+    1. Stateless: having no memory of past interaction. After the first request from client is served, http server forgets about it and what is sent and looks for serving other request. 
+    Because http is stateless, state management techniques such as cookies or session management are implemented so that theres no need to send auth tokens with each request to the server.
+
+    2. Client-server model: communication is always initiated by the client and never by the server, server only responds to incoming requests. 
+
+    In this client-server model, the connection is made of TCP. The major difference between TCP and UDP is:   
+        • TCP is a connection-oriented, reliable protocol that guarantees data delivery, while UDP is a connectionless, faster protocol that sends data without guarantee.
+
+        • TCP uses 3 way handshake to connect, UDP sends data immediately without setting up connection
+
+                3 way handshake: 
+                    Step 1: SYNC-> client says to server that it wants to connect
+                    Step 2: SYNC-ACK-> server says 'i hear you lets connect'
+                    Step 3: ACK-> client says ok lets connect
+------------------------------------------------------------------------------------------------
+
+Basic working of request and response: client sends a request, browser responds to it.
+
+Request view: 
+    Elements    Example
+    Method	    GET, POST, PUT, DELETE
+    Resource	/index.html
+    Header	    Accept-Language: en-US,en;q=0.5             -> to pass additional information.
+    ------a blank line to signify all headers are over------
+    Body	    {name: "John Doe", profile:'picture.jpg'}   -> to pass the main data
+
+Response view: 
+    Elements    Example
+    Header	    Content-Type: text/html; charset=utf-8
+    ------a blank line to signify all headers are over------
+    Body	    {message: 'Welcome!!!', pic: 'smiley.png'}
+    StatusCode	200
+
+Headers: are basically key value pairs used to provide additional info. 
+Different types of headers: 
+    1. Request-headers: provides info about the request itself
+        • User agent :to signify who is sending the request, if it browser or mobile app or postman 
+        • Auth headers: sends bearer tokens to identify right user.
+        • Accept headers: to identify what type of content receiver is expecting like json or text
+
+    2. General headers: used in both request and response.
+    example: date, cache control, connection etc 
+
+    3. Security headers: enhance security of the request and response.
+        • Strict transport security (htts): ensires client only communicates with server in https
+        • Content security policy (CSP): restricts the resources from which js can be loaded 
+        • x-frame-options: Controls whether your website can be embedded inside an <iframe>, <object>, or <embed> tag on another website.
+        • x-content-type-options: Forces the browser to strictly follow the declared file type and prevents it from guessing (or "sniffing").
+        example: By setting X-Content-Type-Options: nosniff, you tell the browser: "Trust the Content-Type header explicitly. If I say it's an image, do not try to execute it as code."
+        • set-cookies: A response header sent by the server to tell the browser: "Hey, save this piece of data and send it back to me on every future request." This is how authentication sessions work.
