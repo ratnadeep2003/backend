@@ -14,3 +14,15 @@ Flow of a request:
     6.The Application (Localhost Mapping):Where the developer's code actually lives.The developer's actual web application (like a Node.js or Python app) is running inside this EC2 instance, usually on a hidden internal port like 3000. Nginx takes the request and internally forwards it to localhost:3000.
     
     7.The Return Journey:The application at port 3000 processes the request, pulls data from a database if needed, and generates the HTML/JSON response. It hands this back to Nginx, which encrypts it and sends it all the way back across the internet to your Chrome browser, where it finally renders on your screen.
+
+------------------------------------------------------------------------------------------------
+
+Why not write backend logic in fronted ?    
+    1. For security reasons 
+
+    2. CORS (Cross-Origin Resource Sharing): is a security mechanism built directly into modern web browsers that determines whether a script running on one website is allowed to interact with resources (like an API or a database) hosted on a completely different domain.
+    By default, browsers enforce the Same-Origin Policy. This means if your frontend code is running on https://my-app.com, the browser will flat-out refuse to let that code pull data from https://api.some-other-domain.com.
+
+    3. Database: servers unlike browsers and literally made to communicate fastly and efficiently with db servers, a broswer with running frontend will provide latency. also browsers are not made to keep presistant connection with databases, meaning a connection pool exist between server and database so the connection wouldnt be made distroyed multiple times unnecessarliy.
+
+    4. Computing power: server can be scaled up and down vertically and horizontally, browsers cannot 
