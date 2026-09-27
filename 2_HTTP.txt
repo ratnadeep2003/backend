@@ -84,11 +84,52 @@ In a cross origin request, there are 2 types of flows:
                                                                 }
                                                             }
                                                      
-    2. Preflight request flow: there are conditions where a browser decides a request flow is eithe simple ot preflight. It is made with the OPTIONS method.
+    2. Preflight request flow: there are conditions where a browser decides a request flow is eithe simple or preflight. It is made with the OPTIONS method.
             • it has to be a cors request, meaning the server and client domain have to be different (compulsory), or any of the following one must be true
             • the method should not be GET/ POST/ or HEAD/
                         OR
             • the request includes non simple headers, anything apart from general or request headers 
                         OR  
-            • the request has a content-type other than application/x-www-form-urlencoded, multipart/form-data or text/plain.
+            • the request has a content-type other than application/x-www-form-urlencoded, multipart/form-data or text/plain and sends json data. 
+    example: 
+    broswer request-> OPTIONS api/resource HTTP/1.1
+                      Post: api/anotherdomai.com
+                      Origim: example.com
+                      Access-control-request-method: PUT
+                      Access-control-request-header: Authorization
+    
+    server response-> HTTP/1.1 no content
+                      Access-control-allow-origin: example.com
+                      Access-control-allow-method: PUT, DELETE
+                      Access-control-allow-header: Authorization
+                      Access-control-max-age: 86400
 
+TLDR: 
+    1. for the request to be a simple request, it must be a cors request meaning host and origin must be on different ports, and if the server returns a reposne with access-control-allow-origin heder then the client receives the response, if access-control-allow-origin heder is blocked, the client receives no response. 
+
+    2. for pre flight request, it must be first OPTIONS, followed by a cors or GET, POST, DELETE. Preflight dont have request or response bodies. If the preflight request is successful, it sends a status code of 204 and then the original request of PUT or DELETE is executed.  
+------------------------------------------------------------------------------------------------
+
+Status codes: 
+    1xx: information
+    2xx: successful
+    3xx: redirection
+    4xx: client error
+    5xx: server error 
+------------------------------------------------------------------------------------------------
+
+HTTP Caching: is a technique used to store copy-server responses for reuse, reducing the need to send multiple requests to the server. how is this implemented ?
+
+Content negotiation: explains how client and server exchage information. Client describes its desired format as json or xml, server tries to respond with the same format and if not it also has a fall back format. This is done mostly through Content type: application/json. 
+
+Handeling large request-reponse: 
+    1. Multipart request: defines how clients can send large requests to server. Here Content-type becomes multipart/form-data. 
+    2. Streaming response: defines how servers can send large responses to the client. Streams large data from server to client in chunks. Content-type here is text/event-stream. Another header of Connection: keepa-live is made so that the connection bteween client and server stays up until all the data is sent from server to client. 
+------------------------------------------------------------------------------------------------
+
+SSL and TLS: SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are security protocols that encrypt data sent between a web browser and a server to keep information private and safe. 
+
+    SSL: It builds a safe, encrypted link between a website and a user.
+    TLS: Modern upgraded version of SSL, It secures internet traffic with stronger encryption algorithms and faster connection handshakes.
+
+HTTPS: its just http with security fatures provided with tls. When you visit a website using https, tls encrypts the communication between your browser and server. 
