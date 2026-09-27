@@ -53,3 +53,42 @@ Different types of headers:
         • x-content-type-options: Forces the browser to strictly follow the declared file type and prevents it from guessing (or "sniffing").
         example: By setting X-Content-Type-Options: nosniff, you tell the browser: "Trust the Content-Type header explicitly. If I say it's an image, do not try to execute it as code."
         • set-cookies: A response header sent by the server to tell the browser: "Hey, save this piece of data and send it back to me on every future request." This is how authentication sessions work.
+
+HTTP methods: GET/ POST/ PUT/ PATCH/ DELETE/ OPTIONS-> provide the intent of the url's interaction with the server
+    1. GET: retrives data from server
+    2. POST: submits an entity to the server
+    3. PUT: replaces all current representation of target resource with request content
+    4. PATCH: used to apply partial modifications to a resource
+    5. DELETE: used to remove a resource identified by a given url
+    6. OPTIONS: fetch the capabilities of a server for a cross origin request 
+------------------------------------------------------------------------------------------------
+
+In a cross origin request, there are 2 types of flows:
+    1. Simple request flow:
+        client                                          server
+        example.com                                     api.example.com (this is the host)
+        
+        GET /api/products/123 HTTP/1.1
+        Host: api.anotherdomain.com
+        Origin: example.com
+        Accept: application/json
+        (if the server accepts this, the response is:)---> HTTP/1.1 200 ok
+                                                            Content type: application/json
+                                                            Access control allow origin: example.com
+
+                                                            {
+                                                                "product" : {
+                                                                    "id": 123,
+                                                                    "name": "example product,
+                                                                    "price": 43
+                                                                }
+                                                            }
+                                                     
+    2. Preflight request flow: there are conditions where a browser decides a request flow is eithe simple ot preflight. It is made with the OPTIONS method.
+            • it has to be a cors request, meaning the server and client domain have to be different (compulsory), or any of the following one must be true
+            • the method should not be GET/ POST/ or HEAD/
+                        OR
+            • the request includes non simple headers, anything apart from general or request headers 
+                        OR  
+            • the request has a content-type other than application/x-www-form-urlencoded, multipart/form-data or text/plain.
+
