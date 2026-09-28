@@ -1,0 +1,27 @@
+Repo layer: bottom layer, deals with database query executions 
+Service layer: deals with business logic
+Controller layer: execution of logic from repo and service layer 
+
+Validation and transformation occurs at a point intersection to the incoming data in json and controller layer or server. 
+
+Validation and transformation block exist so that before the server executes the incoming json request, this block ensures the incoming json data is in expected format. 
+    example: if the required input json must be of 5 character length and if user sends 10 character length, then it does not get validated. 
+
+Transformation: to execute some operation on data provided by user depending on the success or failure of validation pipeline. 
+    example: requirement of 'page' parameter must beb 0<500 and if user sends page='2'-> string, but by default all query parameters are in string format, but the server expectes it to be a number. Hence it is the serveer's responsibility to transform it into the required type. This is called type casting or transformation. 
+------------------------------------------------------------------------------------------------
+
+Incoming Data Validation & Transformation Rules:
+    1. Data Transformation (Shaping)
+        • Transformation (Casting & Normalization): Modifying the data format or type automatically so the server can work with it cleanly.
+        example: Query parameters like ?page=2 arrive as strings ("2").
+
+    2. Validation Checks: type, semantic and complex validation 
+        • Type validation (Type checking): Checking whether a field matches the expected data type
+        example: age must be number not string from query 
+
+        • Semantic validation (Conditional / Business Logic Validation): Validation where the rules depend on the values or states of other fields.
+        example: If isMarried is true, then the partner field becomes mandatory.
+
+        • Complex Validation (Database/Async Validation): Validation that cannot be checked just by looking at the incoming JSON payload alone; it requires querying a database or an external API.
+        example: When a user registers, the format and type of the email are valid, but the system must query the Repository layer to check if that email already exists in the database.
