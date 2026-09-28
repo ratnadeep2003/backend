@@ -1,0 +1,15 @@
+Authentication: who are you ?
+Authorization: what can you do ?
+
+Sessions: initially http was used for client and server communication but it was stateless, it had no memory or cache to server dynamic requests. Hence statefull interactions were required for example: the broswer should remember the person to be logged in when he/she visits a different website through prvious websites link. 
+Hence sessions were introduced. It provided temporary server side context for each user. A session would have some kind of memory that the broswer would have to remember the user if the user makes request next time. 
+
+Session creation: when user logs in, the server creates a unique session consisting of sessionId and it stored relevant user data along with it. This storage could be a persistant db or a redis store which is a in mmeory persistant store compared to traditional db which are file based. 
+
+SessionId is sent to user as a cookie. All the requests the client made after session creation would include that cookie, hence a sort of in memory db was created. 
+But cookies have expiration date. After termination, another session is created and the cycle carries on. 
+
+In case of multiple users, persistant file based storage was used for session storage. 
+-----------------------------------------------------------------------------------------------
+
+JWT: transferring claims in stateless manner between 2 parties.
