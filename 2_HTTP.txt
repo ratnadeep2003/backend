@@ -133,3 +133,20 @@ SSL and TLS: SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are s
     TLS: Modern upgraded version of SSL, It secures internet traffic with stronger encryption algorithms and faster connection handshakes.
 
 HTTPS: its just http with security fatures provided with tls. When you visit a website using https, tls encrypts the communication between your browser and server. 
+------------------------------------------------------------------------------------------------
+CORS applies whenever there is a difference in Origin, which is defined as the combination of Scheme (http/https) + Host (domain) + Port. Even if the domain is the same, changing the port (e.g., frontend on http://localhost:3000 talking to backend on http://localhost:5000) triggers CORS!
+
+
+Method Safety & Idempotency (Crucial Interview & Design Concept): HTTP methods are grouped by their behavioral safety guarantees
+
+    1. Safe: Does not alter the state on the server (read-only).
+    Methods: GET, HEAD, OPTIONS
+    Why it matters: Search engines can safely pre-fetch links without accidentally deleting or buying things.
+    
+    2. Idempotent: Making the same request multiple times yields the exact same server state as making it once.
+    Methods: PUT, DELETE, GET
+    Why it matters: If a network glitch causes a client to retry a DELETE request 3 times, it doesn't change the final result—the resource is still deleted.
+
+    3. Non-Idempotent: Making the same request multiple times can create multiple distinct states or resources.
+    Method: POST
+    Why it matters: If a POST /api/pay request retries due to a timeout, you might accidentally charge the user's credit card twice unless the operation is handled carefully.

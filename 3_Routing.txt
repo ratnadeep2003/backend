@@ -1,0 +1,18 @@
+HTTP methods such as get put post describe the intent of what to do. Routing expresses the where, where do you want to send the data ?
+
+Different types of Routing: 
+    1. Static routes: where the url or route after the defined method never changes 
+        example: GET /api/books, /api/person etc 
+
+    2. Dynamic route: defined with the help of path params
+        example: GET /api/books/1, /api/person/12 etc 
+        GET /api/books/:id, /api/person/:id where the id 1, 12 gets inserted into the route
+
+    3. Query params:  example: GET api/search/?query=some+value
+    ?query forms key and anything followed by = forms the value 
+
+    4. Nested routes: kinda a mix of static and dynamic routes.
+    example: GET api/users/2/post/8-> show 8th post of 2nd user 
+
+    5. Route versioning and depriciation: different versions of the same route can be fetched (if v1 is updated in future then this is used)
+        example: GET api/v1/products, GET api/v2/products
