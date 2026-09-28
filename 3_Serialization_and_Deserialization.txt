@@ -1,0 +1,47 @@
+How clients and servers can make sense of data that is being sent and received: for example if frontend is in JS and backend in Rust than how does this communication occur ?
+
+OSI model: provides a standard for different computer systems to be able to communicate with each other. Consist of total 7 layers.
+
+Layer 7: Application layer 
+    What it does: The user interface where applications interact directly with the network services.
+    Key Protocols: HTTP, HTTPS, FTP, SMTP, DNS, DHCP
+
+Layer 6: Presentation layer
+    What it does: Translates, encrypts, and compresses data so the application layer can understand it (handles formatting and security encoding).
+    Key Protocols: SSL, TLS, JPEG, MPEG, ASCII
+
+Layer 5: Session Layer 
+    What it does: Manages and maintains sessions (connections) between computers, handling setup, coordination, and teardown.
+    Key Protocols: NetBIOS, RPC, PPTP
+
+Layer 4: Transport layer 
+    What it does: Ensures reliable or fast end-to-end data delivery, breaking data into segments and handling error-checking.
+    Key Protocols: TCP, UDP
+
+Layer 3: Network Layer
+    What it does: Handles routing, packet forwarding, and logical addressing (finding the best path across different networks).
+    Key Protocols: IP (IPv4/IPv6), ICMP, IPSec, OSPF, BGP
+
+Layer 2: Data link Layer 
+    What it does: Handles node-to-node data transfer and physical addressing (MAC addresses) within the same local network, detecting physical frame errors.
+    Key Protocols: Ethernet, Wi-Fi (802.11), PPP, ARP
+
+Layer 1: Physical Layer 
+    What it does: Transmits raw binary bits (0s and 1s) as electrical, optical, or radio signals over physical hardware media.
+    Key Protocols / Media: Ethernet cables (Cat6), Fiber optics, Bluetooth physical layer, Hubs, Repeaters
+------------------------------------------------------------------------------------------------
+
+A client and a server would both have same layers: starting with Application layer at the bottom and Physical Layer at the top. 
+Hence a protol or method must exist between client and server which is language agnostic (independent). 
+    Client -------->    Accepted common standard    ---------> Server 
+                    (serialization and de-serialization)
+
+The common serialization standard used is JSON. Other notable ones are YML and XML. These 3 are called text based serialization. 
+
+Typical JSON (Javascript Object Notation) example :
+                {
+                    "name" : "Ratnadeep",
+                    "age" : 23,
+                    "isDeveloper": true,
+                    "skills" : ["frotnend", "backend", "database"]
+                }
